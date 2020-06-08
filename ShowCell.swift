@@ -66,7 +66,7 @@ struct ContentView: View {
                         .foregroundColor(.red)
                         .font(.system(size: 20))
                 }.sheet(isPresented: $showAdd, content: {
-                    SheetAdd(didAddActivity: {
+                    SheetAdd(showAdd: self.$showAdd, didAddActivity: {
                         activity in
                         self.activities.append(activity)
                     })
@@ -108,6 +108,7 @@ struct ShowCell: View {
 struct SheetAdd: View {
     
     @State private var title: String = ""
+    @Binding var showAdd: Bool
     
     var didAddActivity: (Activity) -> ()
     
@@ -118,6 +119,7 @@ struct SheetAdd: View {
                 .frame(width: 250)
             Button(action: {
                 self.didAddActivity(.init(title: self.title, priority: 4, completed: false))
+                self.showAdd = false
             }){
                 Text("Add activity")
                     .padding()
