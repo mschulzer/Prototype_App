@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  EasyDoesIt
 //
-//  Created by Morten Schultz on 08/06/2020.
+//  Created by Morten Schultz on 06/06/2020.
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
@@ -25,6 +25,7 @@ class Activity: Identifiable, ObservableObject {
 struct ContentView: View {
     
     @State var showSheet = false
+    @State var showAdd = false
     
     // A bit of dummy data
     var activities = [
@@ -55,7 +56,19 @@ struct ContentView: View {
             .sheet(isPresented: $showSheet, content: {
                 SheetView(activities: self.activities)
             })
+            
         .navigationBarTitle("My Activities")
+            .navigationBarItems(trailing:
+                Button(action: {
+                    self.showAdd.toggle()
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(.red)
+                        .font(.system(size: 20))
+                }.sheet(isPresented: $showAdd, content: {
+                    Text("Hello, World!")
+                })
+            )
         }
     }
 }
@@ -67,10 +80,12 @@ struct ShowCell: View {
     var body: some View {
         HStack {
             Button(action: {
-                self.activity.completed.toggle()
+                //self.activity.completed.toggle()
             }) {
                 Image(systemName: activity.completed ? "checkmark.circle.fill" : "checkmark.circle")
                     .foregroundColor(activity.completed ? .green : .black)
+            }.onTapGesture {
+                self.activity.completed.toggle()
             }
             Text(activity.title)
             
