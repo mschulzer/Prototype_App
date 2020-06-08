@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  EasyDoesIt
 //
-//  Created by Morten Schultz on 08/06/2020.
+//  Created by Morten Schultz on 06/06/2020.
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
@@ -26,6 +26,7 @@ struct ContentView: View {
     
     @State var showSheet = false
     
+    // A bit of dummy data
     var activities = [
         Activity(title: "Go running", priority: 3, completed: true),
         Activity(title: "Write paper", priority: 5, completed: true),
@@ -84,7 +85,9 @@ struct ShowCell: View {
 }
 
 struct SheetView: View {
+    
     var activities: [Activity]
+    
     var body: some View {
         VStack {
             List {
