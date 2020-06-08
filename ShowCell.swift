@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  EasyDoesIt
 //
-//  Created by Morten Schultz on 06/06/2020.
+//  Created by Morten Schultz on 08/06/2020.
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
@@ -68,14 +68,16 @@ struct ShowCell: View {
             Button(action: {
                 self.activity.completed.toggle()
             }) {
-                Image(systemName: activity.completed ? "circle.fill" : "circle")
+                Image(systemName: activity.completed ? "checkmark.circle.fill" : "checkmark.circle")
+                    .foregroundColor(activity.completed ? .green : .black)
             }
             Text(activity.title)
             
             Spacer()
             
             ForEach(0..<activity.priority) { _ in
-                Image(systemName: "star")
+                Image(systemName: "star.fill")
+                    .foregroundColor(.red)
             }
         }
     }
@@ -88,7 +90,8 @@ struct SheetView: View {
             List {
                 ForEach(activities) { activity in
                     HStack {
-                        Image(systemName: activity.completed ? "circle.fill" : "circle")
+                        Image(systemName: activity.completed ? "checkmark.circle.fill" : "checkmark.circle")
+                            .foregroundColor(activity.completed ? .green : .black)
                         Text("\(activity.title)")
                     }
                 }
