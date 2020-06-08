@@ -23,12 +23,12 @@ class Activity: Identifiable, ObservableObject {
 }
 
 struct ContentView: View {
-    
+    @State var myTxt: String = ""
     @State var showSheet = false
     @State var showAdd = false
     
     // A bit of dummy data
-    var activities = [
+    @State var activities = [
         Activity(title: "Go running", priority: 3, completed: true),
         Activity(title: "Write paper", priority: 5, completed: true),
         Activity(title: "Buy food", priority: 2, completed: false),
@@ -66,7 +66,10 @@ struct ContentView: View {
                         .foregroundColor(.red)
                         .font(.system(size: 20))
                 }.sheet(isPresented: $showAdd, content: {
-                    Text("Hello, World!")
+                    SheetAdd(didAddActivity: {
+                        activity in
+                        self.activities.append(activity)
+                    })
                 })
             )
         }
@@ -85,9 +88,11 @@ struct ShowCell: View {
             }) {
                 Image(systemName: activity.completed ? "checkmark.circle.fill" : "circle")
                     .foregroundColor(activity.completed ? .green : .black)
+                    
             }.onTapGesture {
                 self.activity.completed.toggle()
             }
+            
             Text(activity.title)
             
             Spacer()
@@ -95,6 +100,30 @@ struct ShowCell: View {
             ForEach(0..<activity.priority) { _ in
                 Image(systemName: "star.fill")
                     .foregroundColor(.red)
+            }
+        }
+    }
+}
+
+struct SheetAdd: View {
+    
+    @State private var title: String = ""
+    
+    var didAddActivity: (Activity) -> ()
+    
+    var body: some View {
+        VStack {
+            TextField("", text: $title)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .frame(width: 250)
+            Button(action: {
+                self.didAddActivity(.init(title: self.title, priority: 4, completed: false))
+            }){
+                Text("Add activity")
+                    .padding()
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(40)
             }
         }
     }
