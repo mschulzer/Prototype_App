@@ -73,6 +73,7 @@ struct ContentView: View {
     }
 }
 
+// MARK:- Custom views
 struct ShowCell: View {
     
     @ObservedObject var activity: Activity
