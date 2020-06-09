@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  EasyDoesIt
 //
-//  Created by Morten Schultz on 08/06/2020.
+//  Created by Morten Schultz on 09/06/2020.
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
@@ -108,17 +108,22 @@ struct ShowCell: View {
 struct SheetAdd: View {
     
     @State private var title: String = ""
+    @State private var priority: String = ""
     @Binding var showAdd: Bool
     
     var didAddActivity: (Activity) -> ()
     
     var body: some View {
         VStack {
-            TextField("", text: $title)
+            TextField("Enter activity", text: $title)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 250)
+            TextField("Enter priority", text: $priority)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .frame(width: 250)
+            
             Button(action: {
-                self.didAddActivity(.init(title: self.title, priority: 4, completed: false))
+                self.didAddActivity(.init(title: self.title, priority: Int(self.priority) ?? 0, completed: false))
                 self.showAdd = false
             }){
                 Text("Add activity")
